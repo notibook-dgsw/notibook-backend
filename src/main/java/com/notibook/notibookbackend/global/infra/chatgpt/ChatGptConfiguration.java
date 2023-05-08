@@ -14,9 +14,9 @@ public class ChatGptConfiguration {
     @Bean
     public ChatGptApi chatGptApi() {
         OkHttpClient client = new OkHttpClient().newBuilder()
-                .connectTimeout(1, TimeUnit.SECONDS)
+                .connectTimeout(5, TimeUnit.SECONDS)
                 .readTimeout(15, TimeUnit.SECONDS)
-                .writeTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()

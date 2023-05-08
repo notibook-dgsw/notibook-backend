@@ -9,7 +9,6 @@ import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
-@AllArgsConstructor
 public class SignUpRequest implements EntityConverterWithDependency<UserEntity, PasswordEncoder> {
     @NotNull
     @NotEmpty

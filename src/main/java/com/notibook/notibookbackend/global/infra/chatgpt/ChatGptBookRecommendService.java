@@ -24,6 +24,9 @@ public class ChatGptBookRecommendService implements BookRecommendService {
 
         int size = books.size();
         int n = 0;
+        if(size == 0)
+            return List.of();
+
         BookEntity book = null;
         while(n < maxSize) {
             book = books.get(random.nextInt(size));

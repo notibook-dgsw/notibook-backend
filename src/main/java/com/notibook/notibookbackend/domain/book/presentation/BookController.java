@@ -4,6 +4,7 @@ import com.notibook.notibookbackend.domain.book.presentation.dto.request.History
 import com.notibook.notibookbackend.domain.book.presentation.dto.request.NoteCreationRequest;
 import com.notibook.notibookbackend.domain.book.presentation.dto.request.NoteEditRequest;
 import com.notibook.notibookbackend.domain.book.presentation.dto.response.BookDetailResponse;
+import com.notibook.notibookbackend.domain.book.presentation.dto.response.BookQuizResponse;
 import com.notibook.notibookbackend.domain.book.service.BookService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/books")
-@Controller
+@RestController
 public class BookController {
     private final BookService bookService;
 
@@ -29,6 +30,12 @@ public class BookController {
     @ResponseStatus(HttpStatus.CREATED)
     public void addHistory(@PathVariable String isbn, @Validated @RequestBody HistoryCreationRequest request) {
         bookService.addHistory(isbn, request);
+    }
+
+    @ApiOperation("독서 퀴즈 가져오기")
+    @GetMapping("/{isbn}/quiz")
+    public BookQuizResponse getQuiz(@PathVariable String isbn) {
+        return bookService.getQuiz(isbn);
     }
 
     @ApiOperation("독서 노트 추가")

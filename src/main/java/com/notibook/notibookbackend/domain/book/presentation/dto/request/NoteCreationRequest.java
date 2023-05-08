@@ -7,7 +7,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@AllArgsConstructor
 public class NoteCreationRequest {
     @NotNull
     private Integer page;

@@ -6,6 +6,7 @@ import com.notibook.notibookbackend.domain.book.presentation.dto.request.History
 import com.notibook.notibookbackend.domain.book.presentation.dto.request.NoteCreationRequest;
 import com.notibook.notibookbackend.domain.book.presentation.dto.request.NoteEditRequest;
 import com.notibook.notibookbackend.domain.book.presentation.dto.response.BookDetailResponse;
+import com.notibook.notibookbackend.domain.book.presentation.dto.response.BookQuizResponse;
 import com.notibook.notibookbackend.domain.book.presentation.dto.response.HistoryResponse;
 import com.notibook.notibookbackend.domain.book.presentation.dto.response.NoteResponse;
 import com.notibook.notibookbackend.domain.book.repository.BookBindingRepository;
@@ -34,6 +35,7 @@ public class BookService {
     private final BookRepository bookRepository;
     private final BookBindingRepository bookBindingRepository;
     private final HistoryRecordRepository historyRecordRepository;
+    private final BookQuizService bookQuizService;
     private final NoteRepository noteRepository;
 
     private BookEntity loadNewBook(String isbn) {
@@ -180,5 +182,12 @@ public class BookService {
                 .orElseThrow(() -> new NotFoundException("No such note"));
 
         noteRepository.delete(note);
+    }
+
+    public BookQuizResponse getQuiz(String isbn) {
+        BookEntity book = bookRepository.findById(isbn)
+                .orElseThrow(() -> new NotFoundException("No such book"));
+
+        return bookQuizService.generateQuiz(book.getTitle());
     }
 }

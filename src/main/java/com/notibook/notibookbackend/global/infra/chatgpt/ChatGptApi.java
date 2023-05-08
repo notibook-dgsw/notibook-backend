@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.build.ToStringPlugin;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
@@ -20,6 +21,7 @@ public interface ChatGptApi {
     class ChatGptCompletionResponse {
         @Getter
         @JsonIgnoreProperties(ignoreUnknown = true)
+        @ToStringPlugin.Enhance
         @NoArgsConstructor
         public static class ChatGptCompletionChoice {
             private String text;

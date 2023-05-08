@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/auth")
-@Controller
+@RestController
 public class AuthController {
     private final AuthService authService;
 

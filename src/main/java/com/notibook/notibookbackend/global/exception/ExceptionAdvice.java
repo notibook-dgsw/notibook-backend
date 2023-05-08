@@ -1,5 +1,7 @@
 package com.notibook.notibookbackend.global.exception;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -31,6 +33,14 @@ public class ExceptionAdvice {
                 .message(exception.getMessage())
                 .time(LocalDateTime.now().toString())
                 .build(), HttpStatus.valueOf(exception.getStatus()));
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ErrorResponse> onBusinessException(JwtException exception) {
+        return new ResponseEntity<>(ErrorResponse.builder()
+                .message("Expired or invalid token")
+                .time(LocalDateTime.now().toString())
+                .build(), HttpStatus.UNAUTHORIZED);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

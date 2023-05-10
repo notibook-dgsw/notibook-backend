@@ -2,6 +2,7 @@ package com.notibook.notibookbackend.domain.book.service;
 
 import com.notibook.notibookbackend.domain.book.entity.*;
 import com.notibook.notibookbackend.domain.book.entity.key.UserBookRecordBinder;
+import com.notibook.notibookbackend.domain.book.exception.BookAlreadyExistException;
 import com.notibook.notibookbackend.domain.book.presentation.dto.request.HistoryCreationRequest;
 import com.notibook.notibookbackend.domain.book.presentation.dto.request.NoteCreationRequest;
 import com.notibook.notibookbackend.domain.book.presentation.dto.request.NoteEditRequest;
@@ -189,5 +190,13 @@ public class BookService {
                 .orElseThrow(() -> new NotFoundException("No such book"));
 
         return bookQuizService.generateQuiz(book.getTitle());
+    }
+
+    @Transactional
+    public void registerIsbn(String isbn) {
+        if(bookRepository.findById(isbn).isPresent())
+            throw new BookAlreadyExistException();
+
+        loadNewBook(isbn);
     }
 }

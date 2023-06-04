@@ -38,12 +38,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
-        CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
-        configuration.addAllowedMethod("PATCH");
-        configuration.addAllowedMethod("DELETE");
-
-        http.cors().configurationSource(request -> configuration);
-
         http.authorizeHttpRequests()
                 .antMatchers(swaggerPatterns()).permitAll()
                 .antMatchers("/auth/**").permitAll()

@@ -3,6 +3,7 @@ package com.notibook.notibookbackend.domain.book.service;
 import com.notibook.notibookbackend.domain.book.entity.*;
 import com.notibook.notibookbackend.domain.book.entity.key.UserBookRecordBinder;
 import com.notibook.notibookbackend.domain.book.exception.BookAlreadyExistException;
+import com.notibook.notibookbackend.domain.book.exception.BookNotFoundException;
 import com.notibook.notibookbackend.domain.book.presentation.dto.request.HistoryCreationRequest;
 import com.notibook.notibookbackend.domain.book.presentation.dto.request.NoteCreationRequest;
 import com.notibook.notibookbackend.domain.book.presentation.dto.request.NoteEditRequest;
@@ -39,7 +40,8 @@ public class BookService {
     private final BookQuizService bookQuizService;
     private final NoteRepository noteRepository;
 
-    private BookEntity loadNewBook(String isbn) {
+    @Transactional
+    public BookEntity loadNewBook(String isbn) {
         return bookRepository.save(
                 isbnQueryService.searchBookByIsbn(isbn)
                         .orElseThrow(() -> new NotFoundException("해당하는 책을 조회할 수 없습니다."))
@@ -71,7 +73,7 @@ public class BookService {
                 .orElseThrow(UserUnauthorizedException::new);
 
         BookEntity book = bookRepository.findById(isbn)
-                .orElseGet(() -> loadNewBook(isbn));
+                .orElseThrow(BookNotFoundException::new);
 
         UserBookEntity binding = bookBindingRepository.findByBookAndUser(book, user)
                 .orElseGet(() -> registerUser(book, user));

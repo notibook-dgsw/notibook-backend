@@ -41,6 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeHttpRequests()
                 .antMatchers(swaggerPatterns()).permitAll()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/book-registration").permitAll()
                 .antMatchers("/books/**").authenticated()
                 .antMatchers("/user/**").authenticated();
 

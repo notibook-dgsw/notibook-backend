@@ -18,13 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class BookController {
     private final BookService bookService;
-
-    @ApiOperation("ISBN 등록")
-    @GetMapping("/registration/{isbn}")
-    public void registerISBN(@PathVariable String isbn) {
-        bookService.registerIsbn(isbn);
-    }
-
     @ApiOperation("책 정보 조회")
     @GetMapping("/{isbn}")
     public BookDetailResponse getBookInfo(@PathVariable String isbn) {

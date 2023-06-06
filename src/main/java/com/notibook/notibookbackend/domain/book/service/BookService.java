@@ -193,12 +193,4 @@ public class BookService {
 
         return bookQuizService.generateQuiz(book.getTitle());
     }
-
-    @Transactional
-    public void registerIsbn(String isbn) {
-        if(bookRepository.findById(isbn).isPresent())
-            throw new BookAlreadyExistException();
-
-        loadNewBook(isbn);
-    }
 }

@@ -73,11 +73,10 @@ public class BookService {
                 .orElseThrow(UserUnauthorizedException::new);
 
         BookEntity book = bookRepository.findById(isbn)
-                .orElseThrow(BookNotFoundException::new);
+                .orElseGet(() -> loadNewBook(isbn));
 
         UserBookEntity binding = bookBindingRepository.findByBookAndUser(book, user)
                 .orElseGet(() -> registerUser(book, user));
-
 
         List<HistoryEntity> history = binding.getHistoryRecords()
                 .stream()
